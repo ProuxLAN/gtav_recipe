@@ -37,7 +37,7 @@ tasks:
   # Download basic resources
   - action: download_file
     url: https://github.com/GHMatti/ghmattimysql/releases/download/1.3.2/ghmattimysql.zip
-    dest: ./tmp/ghmattimysql.zip
+    path: ./tmp/ghmattimysql.zip
   - action: unzip
     src: ./tmp/ghmattimysql.zip
     dest: ./resources
