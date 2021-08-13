@@ -1,0 +1,76 @@
+$engine: 3
+$onesync: legacy
+
+name: Zombie
+version: 1.0.0
+author: Marc Proux
+description: A full featured Zombie Server
+
+tasks:
+  # Download default CFX resources
+  - action: download_github
+    src: https://github.com/citizenfx/cfx-server-data
+    ref: 0169fdddaa9511558cfa17bcf80a832f56c359ff
+    subpath: resources
+    dest: ./resources
+
+
+  # Download and prepare server.cfg / loadingscreen / database
+  - action: download_github
+    src: https://github.com/ProuxLAN/gtav_recipe
+    ref: main
+    dest: ./tmp/gtav_recipe
+
+  - action: move_path
+    src: ./tmp/gtav_recipe/Zombie/server.cfg
+    dest: ./server.cfg
+
+  - action: move_path
+    src: ./tmp/gtav_recipe/Zombie/loadingscreen
+    dest: ./resources/loadingscreen
+
+  - action: connect_database
+  - action: query_database
+    file: ./tmp/gtav_recipe/Zombie/database.sql
+
+  
+  # Download basic resources
+  - action: download_github
+    src: https://github.com/GHMatti/ghmattimysql
+    ref: 37f1d2ae5c53f91782d168fe81fba80512d3c46d
+    dest: ./resources/[system]/ghmattimysql
+
+  - action: download_github
+    src: https://github.com/SWRP-PUBLIC/pogressBar
+    ref: 812c0e047344777a52a2fb94c8f77cff62ba403b
+    dest: ./resources/[system]/pogressbar
+
+  - action: download_github
+    src: https://github.com/Blumlaut/RottenV
+    ref: 9972e46e245fb90656633b59f964b588219c1f1c
+    dest: ./resources/[gamemode]/rottenv
+  
+  - action: download_github
+    src: https://github.com/InZidiuZ/LegacyFuel
+    ref: a168ec5b454fc0dcda9804390ba855138dcac2b6
+    dest: ./resources/[utils]/legacyfuel
+
+
+  # Admin resources
+  - action: download_github
+    src: https://github.com/Blumlaut/EasyAdmin
+    ref: 9891cd6040bdfc9f115fcd4a08ad4bc11ad938a3
+    dest: ./resources/[admin]/easyadmin
+
+
+  ## Final touches
+  - action: replace_string
+    mode: all_vars
+    file: ./server.cfg
+
+  - action: remove_path
+    path: ./tmp
+
+variables:
+  mClients: 5
+  steamKey: ""
